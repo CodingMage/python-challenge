@@ -18,20 +18,24 @@ with open(csvpath, newline='') as csvfile:
     for row in csvreader:
         contents.append(row)
         total += int(row[1])
+    for i in range(len(contents)-1):
+        change = int(contents[i+1][1])-int(contents[i][1])
+        if profit < change:
+            profit = change
+            profit_date = contents[i+1][0]
 
-        if profit < int(row[1]):
-            profit = int(row[1])
-            profit_date = row[0]
-
-        elif loss > int(row[1]):
-            loss = int(row[1])
-            loss_date = row[0]
+        elif loss > change:
+            loss = change
+            loss_date = contents[i+1][0]
 
     average = (int(contents[-1][1])-int(contents[0][1]))/(len(contents)-1)
+
+
 print('Financial Analysis')
 print('----------------------------')
 print(f'Total Months: {len(contents)}')
-#print(contents)
+print(f'total: {len(contents)}')
+
 print('$ '+ str(total))
 print(f'$ {round(average,2)}')
 
